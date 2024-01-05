@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accept Custom Amount UPI Payment</title>
+  <meta name="description" content="Accept custom amount UPI payment from your customers for free">
+  <meta name="keywords" content="custom amount UPI payment, fixed upi payment, accept fixed UPI payment">
+  <link rel="icon" type="image/x-icon" href="customupilogo.png">
+  <meta name="author" content="Pikai Mandal">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .payment-container {
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      border-radius: 8px;
+      width: 300px;
+      text-align: center;
+    }
+
+    .upi-logo-container {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto;
+      margin-bottom: 20px;
+    }
+
+    .upi-logo {
+      width: 100%;
+      height: 100%;
+    }
+
+    .payment-form {
+      margin-top: 20px;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .error-message {
+      color: #ff0000;
+      margin-top: 5px;
+    }
+
+    .submit-button {
+      background-color: #4caf50;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="payment-container">
+    <h2>Pikai Mandal</h2>
+    <div class="upi-logo-container" id="qrcode-container">
+      <!-- Placeholder for dynamically generated QR code -->
+    </div>
+    <h4>Scan and pay with any BHIM UPI app</h4>
+    <img src="UPIapps.png" width="280px" height="100px">
+    <form class="payment-form" id="payment-form">
+      <input class="input-field" type="text" name="merchantupi" placeholder="Merchant UPI ID">
+      <span class="error-message" id="error-merchantupi"></span>
+      <br>
+      <input class="input-field" type="number" name="amount" placeholder="Amount">
+      <span class="error-message" id="error-amount"></span>
+      <br>
+      <button class="submit-button" type="button" onclick="generateQRCode()">Show QR</button>
+    </form>
+
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <script>
+      function generateQRCode() {
+        // Clear existing error messages
+        document.getElementById("error-merchantupi").innerHTML = "";
+        document.getElementById("error-amount").innerHTML = "";
+
+        const form = document.getElementById("payment-form");
+        const merchantupi = form.elements["merchantupi"].value;
+        const amount = form.elements["amount"].value;
+
+        // Validate Merchant UPI ID format
+        const upiIdPattern = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+$/;
+        if (!merchantupi || !upiIdPattern.test(merchantupi)) {
+          document.getElementById("error-merchantupi").innerHTML = "Invalid UPI ID Format";
+          return;
+        }
+
+        // Validate Amount range (between 1 and 25000)
+        if (!amount || isNaN(amount) || amount < 1 || amount > 25000) {
+          document.getElementById("error-amount").innerHTML = "Amount must be between Rs.1 to Rs.25000";
+          return;
+        }
+
+        // Standard UPI payment URL format
+        const upiUrl = `upi://pay?pa=${merchantupi}&pn=Pikai%20Mandal&am=${amount}&cu=INR`;
+
+        // Clear existing QR code container
+        document.getElementById("qrcode-container").innerHTML = "";
+
+        // Generate QR code
+        const qrcode = new QRCode(document.getElementById("qrcode-container"), {
+          text: upiUrl,
+          width: 90,
+          height: 90
+        });
+      }
+    </script>
+  </div>
+</body>
+</html>
