@@ -88,11 +88,9 @@
     <script>
       function generateQRCode() {
         // Clear existing error messages
-        document.getElementById("error-merchantupi").innerHTML = "";
         document.getElementById("error-amount").innerHTML = "";
 
         const form = document.getElementById("payment-form");
-        const merchantupi = form.elements["merchantupi"].value;
         const amount = form.elements["amount"].value;
 
         // Validate Amount range (between 1 and 25000)
