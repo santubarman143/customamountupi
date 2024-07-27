@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Accept Custom Amount UPI Payment</title>
+  <title>Santu Barman UPI</title>
   <meta name="description" content="Accept custom amount UPI payment from your customers for free">
   <meta name="keywords" content="custom amount UPI payment, fixed upi payment, accept fixed UPI payment">
   <link rel="icon" type="image/x-icon" href="customupilogo.png">
@@ -71,16 +71,13 @@
 </head>
 <body>
   <div class="payment-container">
-    <h2>Pikai Mandal</h2>
+    <h2>Santu Barman</h2>
     <div class="upi-logo-container" id="qrcode-container">
       <!-- Placeholder for dynamically generated QR code -->
     </div>
     <h4>Scan and pay with any BHIM UPI app</h4>
     <img src="UPIapps.png" width="280px" height="100px">
     <form class="payment-form" id="payment-form">
-      <input class="input-field" type="text" name="merchantupi" placeholder="Merchant UPI ID">
-      <span class="error-message" id="error-merchantupi"></span>
-      <br>
       <input class="input-field" type="number" name="amount" placeholder="Amount">
       <span class="error-message" id="error-amount"></span>
       <br>
@@ -98,13 +95,6 @@
         const merchantupi = form.elements["merchantupi"].value;
         const amount = form.elements["amount"].value;
 
-        // Validate Merchant UPI ID format
-        const upiIdPattern = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+$/;
-        if (!merchantupi || !upiIdPattern.test(merchantupi)) {
-          document.getElementById("error-merchantupi").innerHTML = "Invalid UPI ID Format";
-          return;
-        }
-
         // Validate Amount range (between 1 and 25000)
         if (!amount || isNaN(amount) || amount < 1 || amount > 25000) {
           document.getElementById("error-amount").innerHTML = "Amount must be between Rs.1 to Rs.25000";
@@ -112,7 +102,7 @@
         }
 
         // Standard UPI payment URL format
-        const upiUrl = `upi://pay?pa=${merchantupi}&pn=Pikai%20Mandal&am=${amount}&cu=INR`;
+        const upiUrl = `upi://pay?pa=9123930799@ptyes&pn=Santu%20Barman&am=${amount}&cu=INR`;
 
         // Clear existing QR code container
         document.getElementById("qrcode-container").innerHTML = "";
